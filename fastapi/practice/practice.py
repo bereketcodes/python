@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+import sqlalchemy as db
+
+engine = db.create_engine('sqlite:///practice.db')
 
 app = FastAPI()
 
-# Define Item model
+# # Define Item model
 class Item(BaseModel):
     name: str
     price: float
@@ -31,7 +34,7 @@ async def update_item(item_id: int, item: Item):
         return {"message": "Item updated", "item": item}
     return {"error": "Item not found"}
 
-# DELETE
+# # DELETE
 @app.delete("/items/{item_id}")
 async def delete_item(item_id: int):
     if item_id in items:
